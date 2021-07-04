@@ -1,18 +1,19 @@
 import './index.scss';
 import KateWalk from './assets/Female-4-Walk.png';
+import renderBackground from './background';
 
 const canvas = document.getElementById('game');
+const loading = document.getElementById('loading');
 const ctx = canvas.getContext('2d');
 const heroW = 48;
 const heroH = 48;
 const shots = 3;
-const canvasWH = 600;
 let cycle = 0;
 let keyPressed = null;
 
 // initial location of the hero
-let pY = canvasWH / 2 - heroW / 2;
-let pX = canvasWH / 2 - heroH / 2;
+let pY = canvas.width / 2 - heroW / 2;
+let pX = canvas.height / 2 - heroH / 2;
 
 // sprite row refers to hero's appearance direction: ↓ row 0, ← row 1, → row 2, ↑ row 3
 let spriteRow = 0;
@@ -69,9 +70,11 @@ function keyUpHandler(e) {
 }
 
 function renderHero() {
+  ctx.clearRect(pX, pY, heroW, heroH);
+  renderBackground(ctx, canvas.width, canvas.height);
   switch (keyPressed) {
     case 'Down':
-      pY = pY < canvasWH - heroH - 10 ? pY + 10 : canvasWH - heroH;
+      pY = pY < canvas.width - heroH - 10 ? pY + 10 : canvas.width - heroH;
       cycle = (cycle + 1) % shots;
       break;
     case 'Up':
@@ -83,18 +86,18 @@ function renderHero() {
       cycle = (cycle + 1) % shots;
       break;
     case 'Right':
-      pX = pX < canvasWH - heroW - 10 ? pX + 10 : canvasWH - heroW;
+      pX = pX < canvas.height - heroW - 10 ? pX + 10 : canvas.height - heroW;
       cycle = (cycle + 1) % shots;
       break;
     default:
       break;
   }
-  ctx.clearRect(0, 0, 600, 600);
   ctx.drawImage(img, cycle * heroW, spriteRow * heroH, heroW, heroH, pX, pY, heroW, heroH);
 }
 
 document.addEventListener('keydown', keyDownHandler);
 document.addEventListener('keyup', keyUpHandler);
 img.addEventListener('load', () => {
+  loading.remove();
   setInterval(renderHero, 120);
 });
