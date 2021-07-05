@@ -9,6 +9,7 @@ const heroW = 48;
 const heroH = 48;
 const shots = 3;
 let cycle = 0;
+let starCycle = 0;
 let keyPressed = null;
 
 // initial location of the hero
@@ -71,7 +72,8 @@ function keyUpHandler(e) {
 
 function renderHero() {
   ctx.clearRect(pX, pY, heroW, heroH);
-  renderBackground(ctx, canvas.width, canvas.height);
+  starCycle = (starCycle + 1) % 10;
+  renderBackground(ctx, canvas.width, canvas.height, starCycle);
   switch (keyPressed) {
     case 'Down':
       pY = pY < canvas.width - heroH - 10 ? pY + 10 : canvas.width - heroH;
