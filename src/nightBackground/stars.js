@@ -1,5 +1,7 @@
 function star(ctx, props) {
-  const { color, type, x, y } = props;
+  const {
+    color, type, x, y,
+  } = props;
   ctx.strokeStyle = color;
   ctx.fillStyle = color;
   ctx.lineWidth = 2;
