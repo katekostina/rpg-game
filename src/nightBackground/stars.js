@@ -43,17 +43,72 @@ function star(ctx, props) {
 }
 
 const stars = [
-  { color: '#ffffff', type: 'L', x: 100, y: 100 },
-  { color: '#ffffff', type: 'L', x: 500, y: 50 },
-  { color: '#ffffff', type: 'M', x: 500, y: 500 },
-  { color: '#ffffff', type: 'S', x: 570, y: 350 },
-  { color: '#ffffff', type: 'S', x: 300, y: 450 },
-  { color: '#ffffff', type: 'S', x: 270, y: 180 },
-  { color: '#ffffff', type: 'L', x: 70, y: 320 },
-  { color: '#ffffff', type: 'M', x: 200, y: 250 },
-  { color: '#ffffff', type: 'M', x: 420, y: 140 },
-  { color: '#ffffff', type: 'S', x: 100, y: 10 },
-  { color: '#ffffff', type: 'S', x: 450, y: 40 },
+  {
+    color: '#ffffff',
+    type: 'L',
+    x: 100,
+    y: 100,
+  },
+  {
+    color: '#ffffff',
+    type: 'L',
+    x: 500,
+    y: 50,
+  },
+  {
+    color: '#ffffff',
+    type: 'M',
+    x: 500,
+    y: 500,
+  },
+  {
+    color: '#ffffff',
+    type: 'S',
+    x: 570,
+    y: 350,
+  },
+  {
+    color: '#ffffff',
+    type: 'S',
+    x: 300,
+    y: 450,
+  },
+  {
+    color: '#ffffff',
+    type: 'S',
+    x: 270,
+    y: 180,
+  },
+  {
+    color: '#ffffff',
+    type: 'L',
+    x: 70,
+    y: 320,
+  },
+  {
+    color: '#ffffff',
+    type: 'M',
+    x: 200,
+    y: 250,
+  },
+  {
+    color: '#ffffff',
+    type: 'M',
+    x: 420,
+    y: 140,
+  },
+  {
+    color: '#ffffff',
+    type: 'S',
+    x: 100,
+    y: 10,
+  },
+  {
+    color: '#ffffff',
+    type: 'S',
+    x: 450,
+    y: 40,
+  },
 ];
 
 function renderStars(ctx, starCycle) {
