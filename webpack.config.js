@@ -1,7 +1,10 @@
 const path = require('path');
+require('dotenv').config();
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 const NODE_ENV = process.env.NODE_ENV;
+
+console.log('process.env.NODE_ENV', process.env.NODE_ENV);
 
 module.exports = {
   mode: NODE_ENV || 'development',
@@ -56,5 +59,6 @@ module.exports = {
     hot: true,
     historyApiFallback: true,
   },
+  // devtool: 'source-map',
   devtool: NODE_ENV === 'development' ? 'source-map' : false,
 };

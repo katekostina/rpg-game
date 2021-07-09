@@ -6,7 +6,7 @@
     "start": "node scripts/start.js",
     "lint": "npx eslint src/**/*.js --fix",
     "prettier": "npx prettier --write .",
-    "dev": "npx webpack server",
+    "dev": "source .env; npx webpack server",
     "prepare": "husky install",
     "build:dev": "env NODE_ENV=development webpack",
     "build": "env NODE_ENV=production webpack"
@@ -25,6 +25,7 @@
     "@babel/core": "^7.14.6",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.2.6",
+    "dotenv": "^10.0.0",
     "eslint": "^7.29.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.23.4",

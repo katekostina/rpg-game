@@ -10,5 +10,8 @@ module.exports = {
   },
   rules: {
     'max-len': ["error", { "code": 105 }],
+    'no-unused-vars': "off",
+    'guard-for-in': 'off',
+    'no-restricted-syntax': 'off',
   },
 };

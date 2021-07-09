@@ -1,4 +1,5 @@
 import './index.scss';
+import ClientGame from './client/ClientGame';
 import KateWalk from './assets/Female-4-Walk.png';
 // import renderNightBackground from './nightBackground/nightBackground';
 import terrainAtlas from './assets/terrain.png';
@@ -75,22 +76,22 @@ function keyUpHandler(e) {
   }
 }
 
-function renderBackground() {
-  loading.remove();
-  const { map } = worldCfg;
-  map.forEach((cfgRow, y) => {
-    cfgRow.forEach((cfgCell, x) => {
-      const [sX, sY, sW, sH] = sprites.terrain[cfgCell[0]].frames[0];
-      ctx.drawImage(terrain, sX, sY, sW, sH, x * spriteW, y * spriteH, spriteW, spriteH);
-    });
-  });
-}
+// function renderBackground() {
+//   loading.remove();
+//   const { map } = worldCfg;
+//   map.forEach((cfgRow, y) => {
+//     cfgRow.forEach((cfgCell, x) => {
+//       const [sX, sY, sW, sH] = sprites.terrain[cfgCell[0]].frames[0];
+//       ctx.drawImage(terrain, sX, sY, sW, sH, x * spriteW, y * spriteH, spriteW, spriteH);
+//     });
+//   });
+// }
 
-function renderHero() {
+function walk(timestamp) {
   ctx.clearRect(pX, pY, spriteW, spriteH);
   // starCycle = (starCycle + 1) % 10;
   // renderNightBackground(ctx, canvas.width, canvas.height, starCycle);
-  renderBackground();
+  // renderBackground();
   switch (keyPressed) {
     case 'Down':
       pY = pY < canvas.width - spriteH - 10 ? pY + 10 : canvas.width - spriteH;
@@ -112,11 +113,17 @@ function renderHero() {
       break;
   }
   ctx.drawImage(hero, cycle * spriteW, spriteRow * spriteH, spriteW, spriteH, pX, pY, spriteW, spriteH);
+  window.requestAnimationFrame(walk);
 }
 
 document.addEventListener('keydown', keyDownHandler);
 document.addEventListener('keyup', keyUpHandler);
-hero.addEventListener('load', () => {
-  setInterval(renderHero, 120);
+// terrain.addEventListener('load', renderBackground);
+
+window.addEventListener('load', () => {
+  ClientGame.init({ tagId: 'game' });
 });
-terrain.addEventListener('load', renderBackground);
+
+hero.addEventListener('load', () => {
+  window.requestAnimationFrame(walk);
+});
