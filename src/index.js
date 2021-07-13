@@ -1,26 +1,32 @@
 import './index.scss';
+import ClientGame from './client/ClientGame';
 import KateWalk from './assets/Female-4-Walk.png';
-import renderBackground from './background';
+// import renderNightBackground from './nightBackground/nightBackground';
+import terrainAtlas from './assets/terrain.png';
+import worldCfg from './configs/world.json';
+import sprites from './configs/sprites';
 
 const canvas = document.getElementById('game');
 const loading = document.getElementById('loading');
 const ctx = canvas.getContext('2d');
-const heroW = 48;
-const heroH = 48;
+const spriteW = 48;
+const spriteH = 48;
+const terrain = document.createElement('img');
+terrain.src = terrainAtlas;
+
 const shots = 3;
 let cycle = 0;
-let starCycle = 0;
 let keyPressed = null;
+// const starCycle = 0;
 
 // initial location of the hero
-let pY = canvas.width / 2 - heroW / 2;
-let pX = canvas.height / 2 - heroH / 2;
+let pY = canvas.width / 2 - spriteW / 2;
+let pX = canvas.height / 2 - spriteH / 2;
 
 // sprite row refers to hero's appearance direction: ↓ row 0, ← row 1, → row 2, ↑ row 3
 let spriteRow = 0;
-
-const img = document.createElement('img');
-img.src = KateWalk;
+const hero = document.createElement('img');
+hero.src = KateWalk;
 
 function keyDownHandler(e) {
   switch (e.key) {
@@ -70,13 +76,25 @@ function keyUpHandler(e) {
   }
 }
 
-function renderHero() {
-  ctx.clearRect(pX, pY, heroW, heroH);
-  starCycle = (starCycle + 1) % 10;
-  renderBackground(ctx, canvas.width, canvas.height, starCycle);
+// function renderBackground() {
+//   loading.remove();
+//   const { map } = worldCfg;
+//   map.forEach((cfgRow, y) => {
+//     cfgRow.forEach((cfgCell, x) => {
+//       const [sX, sY, sW, sH] = sprites.terrain[cfgCell[0]].frames[0];
+//       ctx.drawImage(terrain, sX, sY, sW, sH, x * spriteW, y * spriteH, spriteW, spriteH);
+//     });
+//   });
+// }
+
+function walk(timestamp) {
+  ctx.clearRect(pX, pY, spriteW, spriteH);
+  // starCycle = (starCycle + 1) % 10;
+  // renderNightBackground(ctx, canvas.width, canvas.height, starCycle);
+  // renderBackground();
   switch (keyPressed) {
     case 'Down':
-      pY = pY < canvas.width - heroH - 10 ? pY + 10 : canvas.width - heroH;
+      pY = pY < canvas.width - spriteH - 10 ? pY + 10 : canvas.width - spriteH;
       cycle = (cycle + 1) % shots;
       break;
     case 'Up':
@@ -88,18 +106,24 @@ function renderHero() {
       cycle = (cycle + 1) % shots;
       break;
     case 'Right':
-      pX = pX < canvas.height - heroW - 10 ? pX + 10 : canvas.height - heroW;
+      pX = pX < canvas.height - spriteW - 10 ? pX + 10 : canvas.height - spriteW;
       cycle = (cycle + 1) % shots;
       break;
     default:
       break;
   }
-  ctx.drawImage(img, cycle * heroW, spriteRow * heroH, heroW, heroH, pX, pY, heroW, heroH);
+  ctx.drawImage(hero, cycle * spriteW, spriteRow * spriteH, spriteW, spriteH, pX, pY, spriteW, spriteH);
+  window.requestAnimationFrame(walk);
 }
 
 document.addEventListener('keydown', keyDownHandler);
 document.addEventListener('keyup', keyUpHandler);
-img.addEventListener('load', () => {
-  loading.remove();
-  setInterval(renderHero, 120);
+// terrain.addEventListener('load', renderBackground);
+
+window.addEventListener('load', () => {
+  ClientGame.init({ tagId: 'game' });
+});
+
+hero.addEventListener('load', () => {
+  window.requestAnimationFrame(walk);
 });

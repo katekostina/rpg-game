@@ -9,6 +9,9 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    "object-curly-newline": ["error", "never"]
+    'max-len': ["error", { "code": 105 }],
+    'no-unused-vars': "off",
+    'guard-for-in': 'off',
+    'no-restricted-syntax': 'off',
   },
 };
