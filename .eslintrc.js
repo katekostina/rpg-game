@@ -13,5 +13,8 @@ module.exports = {
     'no-unused-vars': "off",
     'guard-for-in': 'off',
     'no-restricted-syntax': 'off',
+    'no-unused-expressions': 'off',
+    'no-plusplus': 'off',
+    'import/prefer-default-export': 'off',
   },
 };
