@@ -44,15 +44,35 @@ class ClientGame {
 
   initKeys() {
     this.engine.input.onKey({
-      ArrowLeft: (keydown) => keydown && this.player.moveByCellOnSurface('left', 'grass'),
-      ArrowRight: (keydown) => keydown && this.player.moveByCellOnSurface('right', 'grass'),
-      ArrowUp: (keydown) => keydown && this.player.moveByCellOnSurface('up', 'grass'),
-      ArrowDown: (keydown) => {
-        if (keydown) {
-          this.player.moveByCellOnSurface('down', 'grass');
-        }
-      },
+      ArrowLeft: (keydown) => keydown && this.moveByCellOnSurface('left', 'grass'),
+      ArrowRight: (keydown) => keydown && this.moveByCellOnSurface('right', 'grass'),
+      ArrowUp: (keydown) => keydown && this.moveByCellOnSurface('up', 'grass'),
+      ArrowDown: (keydown) => keydown && this.moveByCellOnSurface('down', 'grass'),
     });
+  }
+
+  moveByCellOnSurface(dir, surface) {
+    const dirs = {
+      left: [-1, 0],
+      right: [1, 0],
+      up: [0, -1],
+      down: [0, 1],
+    };
+
+    const { player } = this;
+
+    if (player && player.motionProgress === 1) {
+      const canMove = player.moveByCellCoord(
+        dirs[dir][0],
+        dirs[dir][1],
+        (cell) => cell.findObjectsByType(surface).length,
+      );
+
+      if (canMove) {
+        player.setState(dir);
+        player.once('motion-stopped', () => player.setState('main'));
+      }
+    }
   }
 
   getWorld() {

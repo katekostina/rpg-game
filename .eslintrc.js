@@ -16,5 +16,6 @@ module.exports = {
     'no-unused-expressions': 'off',
     'no-plusplus': 'off',
     'import/prefer-default-export': 'off',
+    'no-bitwise': 'off',
   },
 };
