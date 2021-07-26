@@ -9,7 +9,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    'max-len': ["error", { "code": 105 }],
+    'max-len': ["error", { "code": 130 }],
     'no-unused-vars': "off",
     'guard-for-in': 'off',
     'no-restricted-syntax': 'off',
@@ -17,5 +17,7 @@ module.exports = {
     'no-plusplus': 'off',
     'import/prefer-default-export': 'off',
     'no-bitwise': 'off',
+    'no-param-reassign': 'off',
+    'no-return-assign': 'off',
   },
 };
