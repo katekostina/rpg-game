@@ -27,13 +27,14 @@ class ClientGame {
   }
 
   createEngine() {
-    return new ClientEngine(document.getElementById(this.cfg.tagId));
+    return new ClientEngine(document.getElementById(this.cfg.tagId), this);
   }
 
   initEngine() {
     this.engine.loadSprites(sprites).then(() => {
       this.map.init();
       this.engine.on('render', (_, time) => {
+        this.engine.camera.focusAtGameObject(this.player);
         this.map.render(time);
       });
       this.engine.start();
@@ -46,8 +47,16 @@ class ClientGame {
       ArrowLeft: (keydown) => keydown && this.player.moveByCellOnSurface('left', 'grass'),
       ArrowRight: (keydown) => keydown && this.player.moveByCellOnSurface('right', 'grass'),
       ArrowUp: (keydown) => keydown && this.player.moveByCellOnSurface('up', 'grass'),
-      ArrowDown: (keydown) => keydown && this.player.moveByCellOnSurface('down', 'grass'),
+      ArrowDown: (keydown) => {
+        if (keydown) {
+          this.player.moveByCellOnSurface('down', 'grass');
+        }
+      },
     });
+  }
+
+  getWorld() {
+    return this.map;
   }
 
   static init(cfg) {
