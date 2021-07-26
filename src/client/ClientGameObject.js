@@ -38,6 +38,17 @@ class ClientGameObject extends MovableObject {
     this.moveToCellCoord(cell.cellCol + dcol, cell.cellRow + drow, conditionCallback);
   }
 
+  moveByCellOnSurface(dir, surface) {
+    const dirs = {
+      left: [-1, 0],
+      right: [1, 0],
+      up: [0, -1],
+      down: [0, 1],
+    };
+
+    this.moveByCellCoord(dirs[dir][0], dirs[dir][1], (cell) => cell.findObjectsByType(surface).length);
+  }
+
   moveToCellCoord(dcol, drow, conditionCallback = null) {
     const { world } = this;
     const newCell = world.cellAt(dcol, drow);

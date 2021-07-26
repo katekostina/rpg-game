@@ -8,7 +8,9 @@ class ClientGame {
   constructor(cfg) {
     Object.assign(this, {
       cfg,
+      // cfg for now just point to { tagId: 'game' }
       gameObjects,
+      // object with description of game objects and their characteristics
       player: null,
     });
     this.engine = this.createEngine();
@@ -41,34 +43,17 @@ class ClientGame {
 
   initKeys() {
     this.engine.input.onKey({
-      ArrowLeft: (keydown) => {
-        if (keydown) {
-          this.player.moveByCellCoord(-1, 0, (cell) => cell.findObjectsByType('grass').length);
-        }
-      },
-      ArrowRight: (keydown) => {
-        if (keydown) {
-          this.player.moveByCellCoord(1, 0, (cell) => cell.findObjectsByType('grass').length);
-        }
-      },
-      ArrowUp: (keydown) => {
-        if (keydown) {
-          this.player.moveByCellCoord(0, -1, (cell) => cell.findObjectsByType('grass').length);
-        }
-      },
-      ArrowDown: (keydown) => {
-        if (keydown) {
-          this.player.moveByCellCoord(0, 1, (cell) => cell.findObjectsByType('grass').length);
-        }
-      },
+      ArrowLeft: (keydown) => keydown && this.player.moveByCellOnSurface('left', 'grass'),
+      ArrowRight: (keydown) => keydown && this.player.moveByCellOnSurface('right', 'grass'),
+      ArrowUp: (keydown) => keydown && this.player.moveByCellOnSurface('up', 'grass'),
+      ArrowDown: (keydown) => keydown && this.player.moveByCellOnSurface('down', 'grass'),
     });
   }
 
   static init(cfg) {
     if (!ClientGame.game) {
       ClientGame.game = new ClientGame(cfg);
-      // console.log('######');
-      // console.log(this.game, typeof this.game);
+      // cfg for now just point to { tagId: 'game' }
     }
   }
 }
