@@ -8,7 +8,7 @@ class ClientGame {
   constructor(cfg) {
     Object.assign(this, {
       cfg,
-      // cfg for now just point to { tagId: 'game' }
+      // cfg for now just point to { tagId: 'game', name: name }
       gameObjects,
       // object with description of game objects and their characteristics
       player: null,
@@ -82,7 +82,7 @@ class ClientGame {
   static init(cfg) {
     if (!ClientGame.game) {
       ClientGame.game = new ClientGame(cfg);
-      // cfg for now just point to { tagId: 'game' }
+      // cfg for now just point to { tagId: 'game', name: name }
     }
   }
 }
