@@ -38,18 +38,6 @@ class ClientWorld extends PositionedObject {
         });
       }
     }
-    // this.levelCfg.map.forEach((row, y) => {
-    //   row.forEach((cell, x) => {
-    //     this.engine.renderSpriteFrame({
-    //       sprite: ['terrain', cell[0]],
-    //       frame: 0,
-    //       x: x * 48,
-    //       y: y * 48,
-    //       w: 48,
-    //       h: 48,
-    //     });
-    //   });
-    // });
   }
 
   render(time) {
@@ -58,10 +46,42 @@ class ClientWorld extends PositionedObject {
     } = this;
 
     for (let layerId = 0; layerId < levelCfg.layers.length; layerId++) {
-      for (let row = 0; row < worldHeight; row++) {
-        for (let col = 0; col < worldWidth; col++) {
-          map[row][col].render(time, layerId);
-        }
+      const layer = levelCfg.layers[layerId];
+      if (layer.isStatic) {
+        this.renderStaticLayer(time, layer, layerId);
+      } else {
+        this.renderDynamicLayer(time, layerId);
+      }
+    }
+  }
+
+  renderStaticLayer(time, layer, layerId) {
+    const { engine } = this;
+    const { camera } = engine;
+    const layerName = `static_layer_${layerId}`;
+    const cameraPos = camera.worldBounds();
+
+    if (!layer.isRendered) {
+      engine.addCanvas(layerName, this.width, this.height);
+      engine.switchCanvas(layerName);
+      camera.moveTo(0, 0, false);
+      this.renderDynamicLayer(time, layerId);
+      camera.moveTo(cameraPos.x, cameraPos.y, false);
+      engine.switchCanvas('main');
+      layer.isRendered = true;
+    }
+
+    engine.renderCanvas(layerName, cameraPos, {
+      x: 0, y: 0, width: cameraPos.width, height: cameraPos.height,
+    });
+  }
+
+  renderDynamicLayer(time, layerId) {
+    const { map, worldWidth, worldHeight } = this;
+
+    for (let row = 0; row < worldHeight; row++) {
+      for (let col = 0; col < worldWidth; col++) {
+        map[row][col].render(time, layerId);
       }
     }
   }
