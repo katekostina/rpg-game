@@ -3,12 +3,12 @@ import ClientGame from './client/ClientGame';
 
 const loading = document.getElementById('loading');
 const nameInput = document.getElementById('name');
-const startGameButton = document.getElementById('startGame');
 const startScreen = document.getElementById('start-game');
+const nameForm = document.getElementById('nameForm');
 
 window.addEventListener('load', () => {
   loading.remove();
-  startGameButton.addEventListener('click', (e) => {
+  nameForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const name = nameInput.value;
     if (!name) {
